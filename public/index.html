@@ -44,6 +44,8 @@ const C = {
   text:         "#1a2810",
   textMid:      "#4a6030",
   textDim:      "#7a9858",
+  textOnDark:   "#e8f0d0",  // texto legible sobre fondo oliva oscuro
+  textOnDarkDim:"#b8d090",  // texto secundario sobre fondo oliva oscuro
   good:         "#5a9838",
   over:         "#c03020",
   overBg:       "#fce8e0",
@@ -179,7 +181,7 @@ function Toast({msg,onDone}){
   const ref=useRef();
   useEffect(()=>{if(!msg)return;const el=ref.current;if(!el)return;el.style.opacity="1";el.style.transform="translateX(-50%) translateY(0)";const t=setTimeout(()=>{el.style.opacity="0";el.style.transform="translateX(-50%) translateY(-12px)";setTimeout(onDone,350);},2400);return()=>clearTimeout(t);},[msg]);
   if(!msg)return null;
-  return <div ref={ref} style={{position:"fixed",top:"16px",left:"50%",transform:"translateX(-50%) translateY(-12px)",background:C.accent,color:"#fff",padding:"9px 18px",borderRadius:"20px",fontSize:"13px",fontFamily:"Georgia,serif",zIndex:500,opacity:0,transition:"all 0.3s",whiteSpace:"nowrap",boxShadow:"0 4px 20px rgba(232,144,58,0.4)",fontWeight:700}}>{msg}</div>;
+  return <div ref={ref} style={{position:"fixed",top:"16px",left:"50%",transform:"translateX(-50%) translateY(-12px)",background:C.accent,color:"#fff",padding:"11px 20px",borderRadius:"20px",fontSize:"18px",fontFamily:"Georgia,serif",zIndex:500,opacity:0,transition:"all 0.3s",whiteSpace:"nowrap",boxShadow:"0 4px 20px rgba(232,144,58,0.4)",fontWeight:700}}>{msg}</div>;
 }
 
 function OtterLogo({size=48}){
@@ -218,13 +220,13 @@ function OtterAvatar({avatarId}){
   return <div style={{width:"32px",height:"32px",borderRadius:"50%",background:C.surfaceAlt,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,border:`1px solid ${C.border}`}}><OtterLogoColored size={26} body={av.body} belly={av.belly}/></div>;
 }
 function Card({children,style={}}){return <div style={{background:C.surface,borderRadius:"16px",padding:"16px",border:`1px solid ${C.border}`,...style}}>{children}</div>;}
-function SLabel({children}){return <div style={{fontSize:"11px",fontFamily:"Georgia,serif",color:C.textMid,marginBottom:"8px",fontStyle:"italic"}}>{children}</div>;}
+function SLabel({children}){return <div style={{fontSize:"18px",fontFamily:"Georgia,serif",color:C.textMid,marginBottom:"8px",fontStyle:"italic"}}>{children}</div>;}
 function MacroBar({label,value,target,color}){
   const pct=Math.min(100,Math.round((value/target)*100)),over=value>target;
-  return(<div style={{marginBottom:"8px"}}><div style={{display:"flex",justifyContent:"space-between",fontSize:"11px",color:over?C.over:C.textMid,marginBottom:"3px",fontFamily:"Georgia,serif"}}><span>{label}</span><span>{value}g/{target}g{over?" ⚠":""}</span></div><div style={{height:"5px",background:C.surfaceAlt,borderRadius:"3px",overflow:"hidden"}}><div style={{height:"100%",width:`${pct}%`,background:over?C.over:color,borderRadius:"3px",transition:"width 0.8s cubic-bezier(.4,0,.2,1)"}}/></div></div>);
+  return(<div style={{marginBottom:"8px"}}><div style={{display:"flex",justifyContent:"space-between",fontSize:"18px",color:over?C.over:C.textMid,marginBottom:"3px",fontFamily:"Georgia,serif"}}><span>{label}</span><span>{value}g/{target}g{over?" ⚠":""}</span></div><div style={{height:"5px",background:C.surfaceAlt,borderRadius:"3px",overflow:"hidden"}}><div style={{height:"100%",width:`${pct}%`,background:over?C.over:color,borderRadius:"3px",transition:"width 0.8s cubic-bezier(.4,0,.2,1)"}}/></div></div>);
 }
 function MacroChips({calories,protein,carbs,fat}){
-  return(<div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>{[{l:`${calories} kcal`,c:C.accent},{l:`P ${protein}g`,c:C.accentGreen},{l:`C ${carbs}g`,c:"#b07818"},{l:`G ${fat}g`,c:"#8058a8"}].map(m=><span key={m.l} style={{fontSize:"12px",fontFamily:"Georgia,serif",color:m.c,fontWeight:700}}>{m.l}</span>)}</div>);
+  return(<div style={{display:"flex",gap:"8px",flexWrap:"wrap"}}>{[{l:`${calories} kcal`,c:C.accent},{l:`P ${protein}g`,c:C.accentGreen},{l:`C ${carbs}g`,c:"#b07818"},{l:`G ${fat}g`,c:"#8058a8"}].map(m=><span key={m.l} style={{fontSize:"18px",fontFamily:"Georgia,serif",color:m.c,fontWeight:700}}>{m.l}</span>)}</div>);
 }
 function Dots(){return <div style={{display:"flex",gap:"5px",padding:"3px 0"}}>{[0,1,2].map(i=><div key={i} style={{width:"7px",height:"7px",borderRadius:"50%",background:C.textDim,animation:`dotBounce 1.2s ${i*0.2}s infinite ease-in-out`}}/>)}</div>;}
 
@@ -259,19 +261,19 @@ function ApiKeyScreen({onSave}){
     <div style={{minHeight:"100vh",background:C.bg,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"24px"}}>
       <div style={{animation:"floatOtter 3s ease-in-out infinite",marginBottom:"16px"}}><OtterLogo size={72}/></div>
       <h1 style={{fontSize:"32px",color:C.surface,fontFamily:"Georgia,serif",marginBottom:"4px"}}>Nutr<span style={{color:C.accent}}>IA</span></h1>
-      <div style={{fontSize:"13px",color:C.textDim,fontFamily:"Georgia,serif",marginBottom:"32px"}}>tu guía nutricional con IA</div>
+      <div style={{fontSize:"18px",color:C.textOnDark,fontFamily:"Georgia,serif",marginBottom:"32px"}}>tu guía nutricional con IA</div>
       <div style={{width:"100%",maxWidth:"380px",background:C.surface,borderRadius:"20px",padding:"24px",border:`1px solid ${C.border}`}}>
-        <div style={{fontFamily:"Georgia,serif",fontSize:"17px",fontWeight:600,color:C.text,marginBottom:"6px"}}>Conecta tu API key</div>
-        <div style={{fontSize:"13px",color:C.textMid,marginBottom:"20px",lineHeight:1.6}}>Necesitas una API key de Anthropic para usar NutrIA. Se guarda solo en este dispositivo.</div>
+        <div style={{fontFamily:"Georgia,serif",fontSize:"19px",fontWeight:600,color:C.text,marginBottom:"6px"}}>Conecta tu API key</div>
+        <div style={{fontSize:"18px",color:C.textMid,marginBottom:"20px",lineHeight:1.6}}>Necesitas una API key de Anthropic para usar NutrIA. Se guarda solo en este dispositivo.</div>
         <SLabel>Anthropic API Key</SLabel>
         <div style={{position:"relative",marginBottom:"12px"}}>
-          <input type={show?"text":"password"} value={key} onChange={e=>setKey(e.target.value)} onKeyDown={e=>e.key==="Enter"&&save()} placeholder="sk-ant-api03-..." style={{width:"100%",padding:"11px 44px 11px 14px",borderRadius:"11px",border:`1px solid ${C.border}`,background:C.surfaceAlt,fontSize:"14px",color:C.text,fontFamily:"Georgia,serif"}}/>
-          <button onClick={()=>setShow(!show)} style={{position:"absolute",right:"12px",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"16px",color:C.textMid}}>{show?"🙈":"👁"}</button>
+          <input type={show?"text":"password"} value={key} onChange={e=>setKey(e.target.value)} onKeyDown={e=>e.key==="Enter"&&save()} placeholder="sk-ant-api03-..." style={{width:"100%",padding:"11px 44px 11px 14px",borderRadius:"11px",border:`1px solid ${C.border}`,background:C.surfaceAlt,fontSize:"19px",color:C.text,fontFamily:"Georgia,serif"}}/>
+          <button onClick={()=>setShow(!show)} style={{position:"absolute",right:"12px",top:"50%",transform:"translateY(-50%)",background:"none",border:"none",cursor:"pointer",fontSize:"18px",color:C.textMid}}>{show?"🙈":"👁"}</button>
         </div>
-        <div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif",marginBottom:"20px"}}>
+        <div style={{fontSize:"18px",color:C.textOnDark,fontFamily:"Georgia,serif",marginBottom:"20px"}}>
           Obtén tu key gratis en <span style={{color:C.accentGreen}}>console.anthropic.com</span>
         </div>
-        <button onClick={save} disabled={!key.trim()} style={{width:"100%",padding:"13px",background:key.trim()?C.accent:C.surfaceAlt,color:key.trim()?"#fff":C.textDim,border:"none",borderRadius:"12px",cursor:key.trim()?"pointer":"default",fontSize:"14px",fontFamily:"Georgia,serif",fontWeight:700,transition:"all 0.2s"}}>Empezar →</button>
+        <button onClick={save} disabled={!key.trim()} style={{width:"100%",padding:"13px",background:key.trim()?C.accent:C.surfaceAlt,color:key.trim()?"#fff":C.textDim,border:"none",borderRadius:"12px",cursor:key.trim()?"pointer":"default",fontSize:"19px",fontFamily:"Georgia,serif",fontWeight:700,transition:"all 0.2s"}}>Empezar →</button>
       </div>
     </div>
   );
@@ -300,26 +302,26 @@ function Onboarding({onComplete, initialData=null}){
   ];
   const STEPS=["Hola 👋","Tus datos","Tu objetivo","Tus barreras"];
   const finish=()=>{if(!finalMacros)return;setSaving(true);const profile={name:form.name.trim(),gender:form.gender,age:parseInt(form.age),weight:parseFloat(form.weight),height:parseFloat(form.height),activity:form.activity,goal:form.goal,barriers:form.barriers,avatar:form.avatar||"naranja",calories:finalMacros.calories,protein:finalMacros.protein,carbs:finalMacros.carbs,fat:finalMacros.fat,tdee:preview?.tdee||finalMacros.calories,createdAt:new Date().toISOString()};ST.set("nutria-profile",profile);setSaving(false);onComplete(profile);};
-  const inp={background:C.surface,border:`1px solid ${C.border}`,borderRadius:"11px",padding:"11px 14px",fontSize:"15px",color:C.text,outline:"none",width:"100%"};
+  const inp={background:C.surface,border:`1px solid ${C.border}`,borderRadius:"11px",padding:"11px 14px",fontSize:"18px",color:C.text,outline:"none",width:"100%"};
   const OptionBtn=({selected,onClick,children})=>(<button onClick={onClick} style={{padding:"11px 14px",borderRadius:"12px",cursor:"pointer",textAlign:"left",border:`1.5px solid ${selected?C.accent:C.border}`,background:selected?C.accent+"22":C.surfaceAlt,color:selected?C.accent:C.textMid,transition:"all 0.15s",width:"100%",display:"block"}}>{children}</button>);
   return(
     <div style={{minHeight:"100vh",background:C.bg,display:"flex",flexDirection:"column",alignItems:"center",paddingBottom:"40px"}}>
       <div style={{width:"100%",maxWidth:"480px",padding:"32px 24px 0",display:"flex",flexDirection:"column",alignItems:"center",gap:"8px"}}>
         <div style={{animation:"floatOtter 3s ease-in-out infinite"}}><OtterLogo size={64}/></div>
-        <h1 style={{margin:"6px 0 0",fontSize:"30px",fontFamily:"Georgia,serif",fontWeight:700,color:C.surface}}>Nutr<span style={{color:C.accent}}>IA</span></h1>
-        <div style={{fontSize:"13px",color:C.textDim,fontFamily:"Georgia,serif"}}>tu guía nutricional con IA</div>
+        <h1 style={{margin:"6px 0 0",fontSize:"36px",fontFamily:"Georgia,serif",fontWeight:700,color:C.surface}}>Nutr<span style={{color:C.accent}}>IA</span></h1>
+        <div style={{fontSize:"18px",color:C.textOnDark,fontFamily:"Georgia,serif"}}>tu guía nutricional con IA</div>
         <div style={{display:"flex",gap:"6px",marginTop:"20px",alignItems:"center"}}>
           {STEPS.map((s,i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:"6px"}}>
-            <div style={{width:i===step?"24px":"8px",height:"8px",borderRadius:"4px",background:i<step?C.accentGreen:i===step?C.accent:C.accentGreenDim,transition:"all 0.3s"}}/>
-            {i<STEPS.length-1&&<div style={{width:"16px",height:"1px",background:C.accentGreenDim}}/>}
+            <div style={{width:i===step?"24px":"8px",height:"8px",borderRadius:"4px",background:i<step?C.accentGreen:i===step?C.accent:C.textOnDarkDim,transition:"all 0.3s"}}/>
+            {i<STEPS.length-1&&<div style={{width:"16px",height:"1px",background:C.textOnDarkDim}}/>}
           </div>))}
         </div>
-        <div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif",marginTop:"4px"}}>Paso {step+1} de {STEPS.length} · {STEPS[step]}</div>
+        <div style={{fontSize:"18px",color:C.textOnDark,fontFamily:"Georgia,serif",marginTop:"4px"}}>Paso {step+1} de {STEPS.length} · {STEPS[step]}</div>
       </div>
       <div style={{width:"100%",maxWidth:"480px",padding:"24px 24px 0"}}>
         {step===0&&<FadeIn key="s0"><div style={{marginBottom:"28px"}}>
           <div style={{fontFamily:"Georgia,serif",fontSize:"22px",color:C.surface,marginBottom:"8px",fontWeight:600}}>¿Cómo te llamas?</div>
-          <div style={{fontSize:"14px",color:C.textDim,lineHeight:1.6,marginBottom:"24px"}}>Soy NutrIA, tu asistente nutricional. Estoy aquí para ayudarte con apoyo real, no solo números.</div>
+          <div style={{fontSize:"19px",color:C.textOnDark,lineHeight:1.6,marginBottom:"24px"}}>Soy NutrIA, tu asistente nutricional. Estoy aquí para ayudarte con apoyo real, no solo números.</div>
           <SLabel>Tu nombre</SLabel>
           <input autoFocus value={form.name} onChange={e=>set("name",e.target.value)} onKeyDown={e=>e.key==="Enter"&&form.name.trim()&&setStep(1)} placeholder="ej. María" style={inp}/>
           <div style={{marginTop:"20px"}}><SLabel>Elige tu nutria</SLabel>
@@ -330,33 +332,33 @@ function Onboarding({onComplete, initialData=null}){
               </button>
             ))}
           </div>
-          {form.avatar&&<div style={{textAlign:"center",fontSize:"11px",color:C.textMid,marginTop:"8px",fontFamily:"Georgia,serif",fontStyle:"italic"}}>{AVATARS.find(a=>a.id===form.avatar)?.name}</div>}
+          {form.avatar&&<div style={{textAlign:"center",fontSize:"18px",color:C.textMid,marginTop:"8px",fontFamily:"Georgia,serif",fontStyle:"italic",color:C.textOnDark}}>{AVATARS.find(a=>a.id===form.avatar)?.name}</div>}
           </div>
         </div></FadeIn>}
         {step===1&&<FadeIn key="s1"><div style={{marginBottom:"28px"}}>
           <div style={{fontFamily:"Georgia,serif",fontSize:"22px",color:C.surface,marginBottom:"6px",fontWeight:600}}>Tus datos físicos</div>
-          <div style={{fontSize:"13px",color:C.textDim,marginBottom:"20px"}}>Para calcular tus necesidades calóricas con Mifflin-St Jeor.</div>
+          <div style={{fontSize:"18px",color:C.textOnDark,marginBottom:"20px"}}>Para calcular tus necesidades calóricas con Mifflin-St Jeor.</div>
           <SLabel>Sexo biológico</SLabel>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"8px",marginBottom:"16px"}}>
-            {[["female","Mujer","♀"],["male","Hombre","♂"]].map(([v,l,ico])=>(<OptionBtn key={v} selected={form.gender===v} onClick={()=>set("gender",v)}><span style={{fontSize:"18px",marginRight:"8px"}}>{ico}</span><span style={{fontFamily:"Georgia,serif",fontSize:"14px"}}>{l}</span></OptionBtn>))}
+            {[["female","Mujer","♀"],["male","Hombre","♂"]].map(([v,l,ico])=>(<OptionBtn key={v} selected={form.gender===v} onClick={()=>set("gender",v)}><span style={{fontSize:"18px",marginRight:"8px"}}>{ico}</span><span style={{fontFamily:"Georgia,serif",fontSize:"19px"}}>{l}</span></OptionBtn>))}
           </div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"10px",marginBottom:"16px"}}>
-            {[["Edad","age","años","28"],["Peso","weight","kg","70"],["Altura","height","cm","165"]].map(([lbl,key,unit,ph])=>(<div key={key}><SLabel>{lbl}</SLabel><div style={{position:"relative"}}><input type="number" value={form[key]} onChange={e=>set(key,e.target.value)} placeholder={ph} style={{...inp,paddingRight:"36px"}}/><span style={{position:"absolute",right:"12px",top:"50%",transform:"translateY(-50%)",fontSize:"11px",color:C.textMid,fontFamily:"Georgia,serif"}}>{unit}</span></div></div>))}
+            {[["Edad","age","años","28"],["Peso","weight","kg","70"],["Altura","height","cm","165"]].map(([lbl,key,unit,ph])=>(<div key={key}><SLabel>{lbl}</SLabel><div style={{position:"relative"}}><input type="number" value={form[key]} onChange={e=>set(key,e.target.value)} placeholder={ph} style={{...inp,paddingRight:"36px"}}/><span style={{position:"absolute",right:"12px",top:"50%",transform:"translateY(-50%)",fontSize:"18px",color:C.textMid,fontFamily:"Georgia,serif"}}>{unit}</span></div></div>))}
           </div>
           <SLabel>Nivel de actividad</SLabel>
           <div style={{display:"flex",flexDirection:"column",gap:"6px"}}>
-            {Object.entries(ACTIVITY_FACTORS).map(([v,info])=>(<OptionBtn key={v} selected={form.activity===v} onClick={()=>set("activity",v)}><div style={{fontFamily:"Georgia,serif",fontSize:"13px",fontWeight:form.activity===v?600:400}}>{info.label}</div><div style={{fontSize:"11px",color:form.activity===v?C.accent:C.textDim,fontFamily:"Georgia,serif",marginTop:"1px"}}>{info.desc}</div></OptionBtn>))}
+            {Object.entries(ACTIVITY_FACTORS).map(([v,info])=>(<OptionBtn key={v} selected={form.activity===v} onClick={()=>set("activity",v)}><div style={{fontFamily:"Georgia,serif",fontSize:"18px",fontWeight:form.activity===v?600:400}}>{info.label}</div><div style={{fontSize:"18px",color:form.activity===v?C.accent:C.textMid,fontFamily:"Georgia,serif",marginTop:"1px"}}>{info.desc}</div></OptionBtn>))}
           </div>
         </div></FadeIn>}
         {step===2&&<FadeIn key="s2"><div style={{marginBottom:"28px"}}>
           <div style={{fontFamily:"Georgia,serif",fontSize:"22px",color:C.surface,marginBottom:"6px",fontWeight:600}}>¿Cuál es tu objetivo?</div>
-          <div style={{fontSize:"13px",color:C.textDim,marginBottom:"20px"}}>Ajustaré tus calorías y macros automáticamente.</div>
+          <div style={{fontSize:"18px",color:C.textOnDark,marginBottom:"20px"}}>Ajustaré tus calorías y macros automáticamente.</div>
           <div style={{display:"flex",flexDirection:"column",gap:"6px",marginBottom:"20px"}}>
-            {Object.entries(GOAL_ADJUSTMENTS).map(([v,info])=>(<OptionBtn key={v} selected={form.goal===v} onClick={()=>set("goal",v)}><div style={{fontFamily:"Georgia,serif",fontSize:"13px",fontWeight:form.goal===v?600:400}}>{info.label}</div><div style={{fontSize:"11px",color:form.goal===v?C.accent:C.textDim,fontFamily:"Georgia,serif",marginTop:"1px"}}>{info.desc}</div></OptionBtn>))}
+            {Object.entries(GOAL_ADJUSTMENTS).map(([v,info])=>(<OptionBtn key={v} selected={form.goal===v} onClick={()=>set("goal",v)}><div style={{fontFamily:"Georgia,serif",fontSize:"18px",fontWeight:form.goal===v?600:400}}>{info.label}</div><div style={{fontSize:"18px",color:form.goal===v?C.accent:C.textMid,fontFamily:"Georgia,serif",marginTop:"1px"}}>{info.desc}</div></OptionBtn>))}
           </div>
-          {preview&&<Card style={{marginBottom:"16px",background:C.goodBg,border:`1px solid ${C.accentGreen}60`}}><div style={{fontSize:"11px",color:C.accentGreen,fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"10px"}}>✓ Calorías calculadas · gasto diario {preview.tdee} kcal</div><MacroChips {...preview}/></Card>}
+          {preview&&<Card style={{marginBottom:"16px",background:C.goodBg,border:`1px solid ${C.accentGreen}60`}}><div style={{fontSize:"18px",color:C.accentGreen,fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"10px"}}>✓ Calorías calculadas · gasto diario {preview.tdee} kcal</div><MacroChips {...preview}/></Card>}
           {preview&&<div>
-            <button onClick={()=>set("useCustomMacros",!form.useCustomMacros)} style={{width:"100%",padding:"10px 14px",background:form.useCustomMacros?C.surfaceAlt:C.surface,border:`1px solid ${C.border}`,borderRadius:"11px",cursor:"pointer",color:C.textMid,fontSize:"12px",fontFamily:"Georgia,serif",textAlign:"left"}}>{form.useCustomMacros?"▾":"▸"} Ajustar macros manualmente</button>
+            <button onClick={()=>set("useCustomMacros",!form.useCustomMacros)} style={{width:"100%",padding:"10px 14px",background:form.useCustomMacros?C.surfaceAlt:C.surface,border:`1px solid ${C.border}`,borderRadius:"11px",cursor:"pointer",color:C.textMid,fontSize:"18px",fontFamily:"Georgia,serif",textAlign:"left"}}>{form.useCustomMacros?"▾":"▸"} Ajustar macros manualmente</button>
             {form.useCustomMacros&&<FadeIn delay={0.05}><div style={{display:"grid",gridTemplateColumns:"1fr 1fr 2fr",gap:"8px",marginTop:"10px"}}>
               {[["Proteína","customProtein",preview.protein],["Grasa","customFat",preview.fat],["Carbos","customCarbs",preview.carbs]].map(([lbl,key,def])=>(<div key={key}><SLabel>{lbl} (g)</SLabel><input type="number" placeholder={String(def)} value={form[key]} onChange={e=>set(key,e.target.value)} style={{...inp,padding:"9px 10px"}}/></div>))}
               <div style={{gridColumn:"1/-1"}}><SLabel>Calorías totales</SLabel><input type="number" placeholder={String(preview.calories)} value={form.customCalories} onChange={e=>set("customCalories",e.target.value)} style={inp}/></div>
@@ -365,13 +367,13 @@ function Onboarding({onComplete, initialData=null}){
         </div></FadeIn>}
         {step===3&&<FadeIn key="s3"><div style={{marginBottom:"28px"}}>
           <div style={{fontFamily:"Georgia,serif",fontSize:"22px",color:C.surface,marginBottom:"6px",fontWeight:600}}>¿Cuáles son tus barreras?</div>
-          <div style={{fontSize:"13px",color:C.textDim,marginBottom:"20px",lineHeight:1.6}}>Así puedo darte el apoyo adecuado. Selecciona todas las que apliquen.</div>
+          <div style={{fontSize:"18px",color:C.textOnDark,marginBottom:"20px",lineHeight:1.6}}>Así puedo darte el apoyo adecuado. Selecciona todas las que apliquen.</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"8px",marginBottom:"20px"}}>
-            {BARRIERS_OPTIONS.map(b=>{const sel=form.barriers.includes(b.id);return(<button key={b.id} onClick={()=>toggleBarrier(b.id)} style={{padding:"13px 12px",borderRadius:"12px",cursor:"pointer",border:`1.5px solid ${sel?C.accent:C.border}`,background:sel?C.accent+"22":C.surfaceAlt,display:"flex",alignItems:"center",gap:"8px",transition:"all 0.15s"}}><span style={{fontSize:"20px"}}>{b.emoji}</span><span style={{fontFamily:"Georgia,serif",fontSize:"13px",color:sel?C.accent:C.textMid,textAlign:"left"}}>{b.label}</span></button>);})}
+            {BARRIERS_OPTIONS.map(b=>{const sel=form.barriers.includes(b.id);return(<button key={b.id} onClick={()=>toggleBarrier(b.id)} style={{padding:"13px 12px",borderRadius:"12px",cursor:"pointer",border:`1.5px solid ${sel?C.accent:C.border}`,background:sel?C.accent+"22":C.surfaceAlt,display:"flex",alignItems:"center",gap:"8px",transition:"all 0.15s"}}><span style={{fontSize:"20px"}}>{b.emoji}</span><span style={{fontFamily:"Georgia,serif",fontSize:"18px",color:sel?C.accent:C.textMid,textAlign:"left"}}>{b.label}</span></button>);})}
           </div>
           {finalMacros&&form.barriers.length>0&&<FadeIn delay={0.1}><Card style={{background:C.goodBg,border:`1px solid ${C.accentGreen}60`}}>
-            <div style={{fontSize:"13px",color:C.accentGreen,fontFamily:"Georgia,serif",fontWeight:600,marginBottom:"10px"}}>Todo listo, {form.name} 🦦</div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6px",marginBottom:"12px",fontSize:"12px",fontFamily:"Georgia,serif"}}>
+            <div style={{fontSize:"18px",color:C.accentGreen,fontFamily:"Georgia,serif",fontWeight:600,marginBottom:"10px"}}>Todo listo, {form.name} 🦦</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6px",marginBottom:"12px",fontSize:"18px",fontFamily:"Georgia,serif"}}>
               <div><span style={{color:C.textMid}}>Objetivo: </span><span style={{color:C.text}}>{GOAL_ADJUSTMENTS[form.goal]?.label}</span></div>
               <div><span style={{color:C.textMid}}>Actividad: </span><span style={{color:C.text}}>{ACTIVITY_FACTORS[form.activity]?.label}</span></div>
               <div><span style={{color:C.textMid}}>Barreras: </span><span style={{color:C.text}}>{form.barriers.length} identificadas</span></div>
@@ -381,15 +383,15 @@ function Onboarding({onComplete, initialData=null}){
           </Card></FadeIn>}
         </div></FadeIn>}
         <div style={{display:"flex",gap:"10px",paddingBottom:"16px"}}>
-          {step>0&&<button onClick={()=>setStep(s=>s-1)} style={{flex:1,padding:"13px",background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"12px",cursor:"pointer",color:C.textMid,fontSize:"14px"}}>← Atrás</button>}
+          {step>0&&<button onClick={()=>setStep(s=>s-1)} style={{flex:1,padding:"13px",background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"12px",cursor:"pointer",color:C.textMid,fontSize:"19px"}}>← Atrás</button>}
           {step<3
             ?<div style={{flex:2,display:"flex",flexDirection:"column",gap:"5px"}}>
-              {!canNext[step]&&<div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif",textAlign:"center",padding:"2px 0"}}>
+              {!canNext[step]&&<div style={{fontSize:"18px",color:C.textOnDark,fontFamily:"Georgia,serif",textAlign:"center",padding:"2px 0",fontWeight:600}}>
                 {step===0?"Escribe tu nombre para continuar":step===1?(!form.gender?"Elige sexo biológico":!form.age||!form.weight||!form.height?"Rellena edad, peso y altura":!form.activity?"Elige nivel de actividad":""):step===2?"Elige tu objetivo":"Selecciona al menos una barrera"}
               </div>}
-              <button onClick={()=>canNext[step]&&setStep(s=>s+1)} style={{width:"100%",padding:"13px",background:canNext[step]?C.accent:C.surfaceAlt,color:canNext[step]?"#fff":C.textMid,border:`1px solid ${canNext[step]?C.accent:C.border}`,borderRadius:"12px",cursor:canNext[step]?"pointer":"not-allowed",fontSize:"14px",fontFamily:"Georgia,serif",fontWeight:700,transition:"all 0.2s"}}>Continuar →</button>
+              <button onClick={()=>canNext[step]&&setStep(s=>s+1)} style={{width:"100%",padding:"13px",background:canNext[step]?C.accent:C.surfaceAlt,color:canNext[step]?"#fff":C.textMid,border:`1px solid ${canNext[step]?C.accent:C.border}`,borderRadius:"12px",cursor:canNext[step]?"pointer":"not-allowed",fontSize:"19px",fontFamily:"Georgia,serif",fontWeight:700,transition:"all 0.2s"}}>Continuar →</button>
             </div>
-            :<button onClick={finish} disabled={saving||!finalMacros||form.barriers.length===0} style={{flex:2,padding:"13px",background:(!saving&&finalMacros&&form.barriers.length>0)?C.accentGreen:C.surfaceAlt,color:(!saving&&finalMacros&&form.barriers.length>0)?"#fff":C.textMid,border:"none",borderRadius:"12px",cursor:"pointer",fontSize:"14px",fontFamily:"Georgia,serif",fontWeight:700}}>{saving?"Guardando…":"¡Empezar con NutrIA! 🦦"}</button>}
+            :<button onClick={finish} disabled={saving||!finalMacros||form.barriers.length===0} style={{flex:2,padding:"13px",background:(!saving&&finalMacros&&form.barriers.length>0)?C.accentGreen:C.surfaceAlt,color:(!saving&&finalMacros&&form.barriers.length>0)?"#fff":C.textMid,border:"none",borderRadius:"12px",cursor:"pointer",fontSize:"19px",fontFamily:"Georgia,serif",fontWeight:700}}>{saving?"Guardando…":"¡Empezar con NutrIA! 🦦"}</button>}
         </div>
       </div>
     </div>
@@ -408,25 +410,25 @@ function ActivityPanel({activity,onChange,adjustedCal,profile}){
   return(<div>
     <Card>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}>
-        <div style={{fontSize:"11px",fontFamily:"Georgia,serif",color:C.textMid,}}>⚡ Actividad hoy</div>
-        <button onClick={()=>setEditing(true)} style={{background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"8px",padding:"4px 10px",cursor:"pointer",fontSize:"11px",fontFamily:"Georgia,serif",color:C.textMid}}>{activity.lastUpdated?"Actualizar":"+ Añadir"}</button>
+        <div style={{fontSize:"18px",fontFamily:"Georgia,serif",color:C.textMid,}}>⚡ Actividad hoy</div>
+        <button onClick={()=>setEditing(true)} style={{background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"8px",padding:"4px 10px",cursor:"pointer",fontSize:"18px",fontFamily:"Georgia,serif",color:C.textMid}}>{activity.lastUpdated?"Actualizar":"+ Añadir"}</button>
       </div>
       {!activity.lastUpdated
-        ?<div style={{display:"flex",alignItems:"center",gap:"10px"}}><div style={{fontSize:"28px",opacity:0.4}}>👟</div><div><div style={{fontSize:"13px",color:C.textMid,fontStyle:"italic"}}>Sin datos de actividad hoy</div><div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif",marginTop:"2px"}}>Añade tus pasos para ajustar tu meta</div></div></div>
+        ?<div style={{display:"flex",alignItems:"center",gap:"10px"}}><div style={{fontSize:"28px",opacity:0.4}}>👟</div><div><div style={{fontSize:"18px",color:C.textMid,fontStyle:"italic"}}>Sin datos de actividad hoy</div><div style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif",marginTop:"2px"}}>Añade tus pasos para ajustar tu meta</div></div></div>
         :<div>
           <div style={{marginBottom:"12px"}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:"5px"}}>
-              <div style={{display:"flex",alignItems:"center",gap:"6px"}}><span style={{fontSize:"18px"}}>👟</span><span style={{fontSize:"22px",fontWeight:700,color:C.steps,fontFamily:"Georgia,serif"}}>{(activity.steps||0).toLocaleString("es-ES")}</span><span style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif"}}>pasos</span></div>
-              <span style={{fontSize:"11px",color:stepPct>=100?C.accentGreen:C.textDim,fontFamily:"Georgia,serif",fontWeight:stepPct>=100?700:400}}>{stepPct}% de {stepGoal.toLocaleString("es-ES")}</span>
+              <div style={{display:"flex",alignItems:"center",gap:"6px"}}><span style={{fontSize:"18px"}}>👟</span><span style={{fontSize:"22px",fontWeight:700,color:C.steps,fontFamily:"Georgia,serif"}}>{(activity.steps||0).toLocaleString("es-ES")}</span><span style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>pasos</span></div>
+              <span style={{fontSize:"18px",color:stepPct>=100?C.accentGreen:C.textDim,fontFamily:"Georgia,serif",fontWeight:stepPct>=100?700:400}}>{stepPct}% de {stepGoal.toLocaleString("es-ES")}</span>
             </div>
             <div style={{height:"6px",background:C.surfaceAlt,borderRadius:"3px",overflow:"hidden"}}><div style={{height:"100%",width:`${stepPct}%`,background:stepPct>=100?C.accentGreen:C.steps,borderRadius:"3px",transition:"width 1s cubic-bezier(.4,0,.2,1)"}}/></div>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"8px"}}>
             {[{icon:"🔥",label:"Quemadas",val:`${activity.burnedCal||stepsToKcal(activity.steps||0)} kcal`,color:C.accent},{icon:"➕",label:"Bonus",val:`+${Math.round((activity.burnedCal||stepsToKcal(activity.steps||0))*EXERCISE_RECOVER)} kcal`,color:C.accentGreen},{icon:"🎯",label:"Meta hoy",val:`${adjustedCal} kcal`,color:C.text}].map(s=>(
               <div key={s.label} style={{background:C.surfaceAlt,borderRadius:"10px",padding:"8px 10px",border:`1px solid ${C.border}`}}>
-                <div style={{fontSize:"14px",marginBottom:"2px"}}>{s.icon}</div>
-                <div style={{fontSize:"13px",fontWeight:700,color:s.color,fontFamily:"Georgia,serif",lineHeight:1}}>{s.val}</div>
-                <div style={{fontSize:"9px",color:C.textDim,fontFamily:"Georgia,serif",marginTop:"2px"}}>{s.label}</div>
+                <div style={{fontSize:"19px",marginBottom:"2px"}}>{s.icon}</div>
+                <div style={{fontSize:"18px",fontWeight:700,color:s.color,fontFamily:"Georgia,serif",lineHeight:1}}>{s.val}</div>
+                <div style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif",marginTop:"2px"}}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -434,7 +436,7 @@ function ActivityPanel({activity,onChange,adjustedCal,profile}){
     </Card>
     <SlideUp show={editing} onClose={()=>setEditing(false)}>
       <div style={{padding:"20px"}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"18px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"17px"}}>⚡ Registrar actividad</div><button onClick={()=>setEditing(false)} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"18px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>⚡ Registrar actividad</div><button onClick={()=>setEditing(false)} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
         <div style={{marginBottom:"18px"}}>
           <SLabel>👟 Pasos del día</SLabel>
           <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"6px"}}>
@@ -442,24 +444,24 @@ function ActivityPanel({activity,onChange,adjustedCal,profile}){
             <input type="number" value={draft.steps} onChange={e=>setDraft(p=>({...p,steps:Math.max(0,parseInt(e.target.value)||0),burnedCal:0}))} style={{flex:1,padding:"10px",borderRadius:"10px",border:`1px solid ${C.border}`,background:C.surfaceAlt,fontSize:"20px",color:C.steps,textAlign:"center",outline:"none",fontWeight:700}}/>
             <button onClick={()=>setDraft(p=>({...p,steps:p.steps+500}))} style={{width:"36px",height:"36px",borderRadius:"10px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>+</button>
           </div>
-          <div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif",textAlign:"center"}}>≈ {stepsToKcal(draft.steps)} kcal quemadas por pasos</div>
+          <div style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif",textAlign:"center"}}>≈ {stepsToKcal(draft.steps)} kcal quemadas por pasos</div>
         </div>
         <div style={{marginBottom:"18px"}}>
           <SLabel>💪 Entrenamiento (opcional)</SLabel>
           <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:"6px",marginBottom:"10px"}}>
-            {WORKOUTS.map(w=><button key={w.label} onClick={()=>applyWorkout(w)} style={{padding:"8px 4px",borderRadius:"10px",border:`1px solid ${draft.workout===w.label?C.accent:C.border}`,background:draft.workout===w.label?C.accent+"22":C.surfaceAlt,cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:"3px"}}><span style={{fontSize:"20px"}}>{w.emoji}</span><span style={{fontSize:"9px",fontFamily:"Georgia,serif",color:draft.workout===w.label?C.accent:C.textMid}}>{w.label}</span></button>)}
+            {WORKOUTS.map(w=><button key={w.label} onClick={()=>applyWorkout(w)} style={{padding:"8px 4px",borderRadius:"10px",border:`1px solid ${draft.workout===w.label?C.accent:C.border}`,background:draft.workout===w.label?C.accent+"22":C.surfaceAlt,cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:"3px"}}><span style={{fontSize:"20px"}}>{w.emoji}</span><span style={{fontSize:"18px",fontFamily:"Georgia,serif",color:draft.workout===w.label?C.accent:C.textMid}}>{w.label}</span></button>)}
           </div>
           {draft.workout&&<div style={{display:"flex",alignItems:"center",gap:"10px"}}>
-            <div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif",whiteSpace:"nowrap"}}>Duración (min):</div>
-            <input type="number" value={draft.workoutMins||45} onChange={e=>{const m=parseInt(e.target.value)||45;const w=WORKOUTS.find(w=>w.label===draft.workout);const kcal=w?Math.round(w.met*(profile?.weight||75)*(m/60)):draft.burnedCal;setDraft(p=>({...p,workoutMins:m,burnedCal:kcal}));}} style={{width:"70px",padding:"8px",borderRadius:"9px",border:`1px solid ${C.border}`,background:C.surfaceAlt,fontSize:"15px",color:C.text,textAlign:"center",outline:"none"}}/>
-            <div style={{fontSize:"12px",color:C.accent,fontFamily:"Georgia,serif",fontWeight:700}}>= {draft.burnedCal} kcal</div>
+            <div style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif",whiteSpace:"nowrap"}}>Duración (min):</div>
+            <input type="number" value={draft.workoutMins||45} onChange={e=>{const m=parseInt(e.target.value)||45;const w=WORKOUTS.find(w=>w.label===draft.workout);const kcal=w?Math.round(w.met*(profile?.weight||75)*(m/60)):draft.burnedCal;setDraft(p=>({...p,workoutMins:m,burnedCal:kcal}));}} style={{width:"70px",padding:"8px",borderRadius:"9px",border:`1px solid ${C.border}`,background:C.surfaceAlt,fontSize:"18px",color:C.text,textAlign:"center",outline:"none"}}/>
+            <div style={{fontSize:"18px",color:C.accent,fontFamily:"Georgia,serif",fontWeight:700}}>= {draft.burnedCal} kcal</div>
           </div>}
         </div>
         <div style={{background:C.goodBg,borderRadius:"12px",padding:"12px 14px",border:`1px solid ${C.accentGreen}60`,marginBottom:"16px"}}>
-          <div style={{fontSize:"12px",color:C.accentGreen,fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"4px"}}>✓ Meta ajustada</div>
-          <div style={{fontSize:"13px",color:C.textMid}}>Base <span style={{color:C.text,fontWeight:700}}>{profile?.calories} kcal</span> + bonus <span style={{color:C.accentGreen,fontWeight:700}}>+{Math.round((draft.burnedCal||stepsToKcal(draft.steps))*EXERCISE_RECOVER)} kcal</span> = <span style={{color:C.accent,fontWeight:700}}>{(profile?.calories||0)+Math.round((draft.burnedCal||stepsToKcal(draft.steps))*EXERCISE_RECOVER)} kcal</span></div>
+          <div style={{fontSize:"18px",color:C.accentGreen,fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"4px"}}>✓ Meta ajustada</div>
+          <div style={{fontSize:"18px",color:C.textMid}}>Base <span style={{color:C.text,fontWeight:700}}>{profile?.calories} kcal</span> + bonus <span style={{color:C.accentGreen,fontWeight:700}}>+{Math.round((draft.burnedCal||stepsToKcal(draft.steps))*EXERCISE_RECOVER)} kcal</span> = <span style={{color:C.accent,fontWeight:700}}>{(profile?.calories||0)+Math.round((draft.burnedCal||stepsToKcal(draft.steps))*EXERCISE_RECOVER)} kcal</span></div>
         </div>
-        <button onClick={save} style={{width:"100%",padding:"13px",background:C.accent,color:"#fff",border:"none",borderRadius:"12px",fontSize:"14px",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:700}}>Guardar actividad ✓</button>
+        <button onClick={save} style={{width:"100%",padding:"13px",background:C.accent,color:"#fff",border:"none",borderRadius:"12px",fontSize:"19px",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:700}}>Guardar actividad ✓</button>
       </div>
     </SlideUp>
   </div>);
@@ -473,9 +475,9 @@ function BarcodeScanner({onResult,onClose}){
   const startCam=async()=>{try{const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});streamRef.current=s;if(videoRef.current){videoRef.current.srcObject=s;videoRef.current.play();}setStatus("scanning");if("BarcodeDetector"in window){const det=new window.BarcodeDetector({formats:["ean_13","ean_8","upc_a","upc_e","code_128"]});intRef.current=setInterval(async()=>{if(!videoRef.current||videoRef.current.readyState<2)return;try{const b=await det.detect(videoRef.current);if(b.length){clearInterval(intRef.current);fetchProd(b[0].rawValue);}}catch{}},300);}}catch{setStatus("error");}};
   const fetchProd=async code=>{setFetching(true);stopCam();try{const r=await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);const d=await r.json();if(d.status===1){const p=d.product,n=p.nutriments;setProduct({name:p.product_name||"Producto",brand:p.brands||"",barcode:code,image:p.image_front_small_url||null,calories:Math.round(n["energy-kcal_100g"]||0),protein:Math.round((n.proteins_100g||0)*10)/10,carbs:Math.round((n.carbohydrates_100g||0)*10)/10,fat:Math.round((n.fat_100g||0)*10)/10,grams:100});}else setProduct({notFound:true,barcode:code});}catch{setProduct({notFound:true,barcode:"?"});}setFetching(false);};
   const calc=p=>{const g=p.grams/100;return{...p,calories:Math.round(p.calories*g),protein:Math.round(p.protein*g*10)/10,carbs:Math.round(p.carbs*g*10)/10,fat:Math.round(p.fat*g*10)/10};};
-  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"11px",padding:"10px 13px",fontSize:"14px",color:C.text,outline:"none",width:"100%"};
+  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"11px",padding:"10px 13px",fontSize:"19px",color:C.text,outline:"none",width:"100%"};
   return(<div style={{padding:"20px"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"17px"}}>📷 Escanear código</div><button onClick={onClose} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>📷 Escanear código</div><button onClick={onClose} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
     {!product&&!fetching&&<FadeIn>
       <div style={{position:"relative",borderRadius:"16px",overflow:"hidden",background:"#0a1206",aspectRatio:"4/3",marginBottom:"12px",border:`1px solid ${C.border}`}}>
         <video ref={videoRef} autoPlay playsInline muted style={{width:"100%",height:"100%",objectFit:"cover"}}/>
@@ -483,24 +485,24 @@ function BarcodeScanner({onResult,onClose}){
           <div style={{width:"220px",height:"110px",border:`2px solid ${C.accentGreen}`,borderRadius:"10px",position:"relative",boxShadow:"0 0 0 2000px rgba(0,0,0,0.45)"}}>
             <div style={{position:"absolute",top:0,left:0,right:0,height:"2px",background:C.accentGreen,animation:"scanLine 1.5s ease-in-out infinite"}}/>
           </div>
-          <div style={{marginTop:"14px",color:"rgba(255,255,255,0.9)",fontSize:"13px",fontFamily:"Georgia,serif",background:"rgba(0,0,0,0.6)",padding:"5px 14px",borderRadius:"8px"}}>Apunta al código de barras</div>
+          <div style={{marginTop:"14px",color:"rgba(255,255,255,0.9)",fontSize:"18px",fontFamily:"Georgia,serif",background:"rgba(0,0,0,0.6)",padding:"5px 14px",borderRadius:"8px"}}>Apunta al código de barras</div>
         </div>}
-        {status==="error"&&<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"8px"}}><div style={{fontSize:"32px"}}>📵</div><div style={{color:"white",fontSize:"13px",fontFamily:"Georgia,serif",textAlign:"center"}}>Sin cámara. Usa código manual.</div></div>}
+        {status==="error"&&<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"8px"}}><div style={{fontSize:"32px"}}>📵</div><div style={{color:"white",fontSize:"18px",fontFamily:"Georgia,serif",textAlign:"center"}}>Sin cámara. Usa código manual.</div></div>}
       </div>
-      <div style={{display:"flex",gap:"8px"}}><input value={manual} onChange={e=>setManual(e.target.value)} onKeyDown={e=>e.key==="Enter"&&manual.length>5&&fetchProd(manual.trim())} placeholder="Código manual…" style={inp}/><button onClick={()=>fetchProd(manual.trim())} disabled={manual.length<5} style={{background:manual.length>=5?C.accent:C.surfaceAlt,color:manual.length>=5?"#fff":C.textDim,border:"none",borderRadius:"11px",padding:"10px 14px",cursor:"pointer",fontSize:"13px",fontWeight:700}}>Buscar</button></div>
+      <div style={{display:"flex",gap:"8px"}}><input value={manual} onChange={e=>setManual(e.target.value)} onKeyDown={e=>e.key==="Enter"&&manual.length>5&&fetchProd(manual.trim())} placeholder="Código manual…" style={inp}/><button onClick={()=>fetchProd(manual.trim())} disabled={manual.length<5} style={{background:manual.length>=5?C.accent:C.surfaceAlt,color:manual.length>=5?"#fff":C.textDim,border:"none",borderRadius:"11px",padding:"10px 14px",cursor:"pointer",fontSize:"18px",fontWeight:700}}>Buscar</button></div>
     </FadeIn>}
-    {fetching&&<div style={{textAlign:"center",padding:"40px"}}><div style={{animation:"floatOtter 1s ease-in-out infinite",display:"inline-block"}}><OtterLogo size={52}/></div><div style={{fontFamily:"Georgia,serif",color:C.textMid,fontSize:"13px",marginTop:"12px"}}>Buscando…</div></div>}
-    {product?.notFound&&<div style={{textAlign:"center",padding:"32px",background:C.overBg,borderRadius:"16px"}}><div style={{fontSize:"36px",marginBottom:"10px"}}>🔍</div><div style={{color:C.over,fontFamily:"Georgia,serif",marginBottom:"14px"}}>Producto no encontrado</div><button onClick={()=>{setProduct(null);startCam();}} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"10px",padding:"9px 18px",cursor:"pointer",fontWeight:700}}>Intentar de nuevo</button></div>}
+    {fetching&&<div style={{textAlign:"center",padding:"40px"}}><div style={{animation:"floatOtter 1s ease-in-out infinite",display:"inline-block"}}><OtterLogo size={52}/></div><div style={{fontFamily:"Georgia,serif",color:C.textMid,fontSize:"18px",marginTop:"12px"}}>Buscando…</div></div>}
+    {product?.notFound&&<div style={{textAlign:"center",padding:"32px",background:C.overBg,borderRadius:"16px"}}><div style={{fontSize:"36px",marginBottom:"10px"}}>🔍</div><div style={{color:C.over,fontFamily:"Georgia,serif",marginBottom:"14px"}}>Producto no encontrado</div><button onClick={()=>{setProduct(null);startCam();}} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"10px",padding:"11px 20px",cursor:"pointer",fontWeight:700}}>Intentar de nuevo</button></div>}
     {product&&!product.notFound&&<FadeIn>
       <Card style={{marginBottom:"14px"}}>
         <div style={{display:"flex",gap:"12px",alignItems:"flex-start",marginBottom:"14px"}}>
           {product.image&&<img src={product.image} alt="" style={{width:"60px",height:"60px",borderRadius:"12px",objectFit:"contain",background:C.surfaceAlt,flexShrink:0}}/>}
-          <div style={{flex:1}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"15px"}}>{product.name}</div>{product.brand&&<div style={{fontSize:"12px",color:C.textMid,fontFamily:"Georgia,serif"}}>{product.brand}</div>}</div>
+          <div style={{flex:1}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"18px"}}>{product.name}</div>{product.brand&&<div style={{fontSize:"18px",color:C.textMid,fontFamily:"Georgia,serif"}}>{product.brand}</div>}</div>
         </div>
         <div style={{marginBottom:"14px"}}><SLabel>Gramos</SLabel>
           <div style={{display:"flex",alignItems:"center",gap:"10px"}}>
             <button onClick={()=>setProduct(p=>({...p,grams:Math.max(10,p.grams-10)}))} style={{width:"36px",height:"36px",borderRadius:"10px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>−</button>
-            <input type="number" value={product.grams} onChange={e=>setProduct(p=>({...p,grams:Math.max(1,parseInt(e.target.value)||1)}))} style={{flex:1,padding:"8px",borderRadius:"10px",border:`1px solid ${C.border}`,fontSize:"17px",color:C.text,background:C.surfaceAlt,textAlign:"center",outline:"none"}}/>
+            <input type="number" value={product.grams} onChange={e=>setProduct(p=>({...p,grams:Math.max(1,parseInt(e.target.value)||1)}))} style={{flex:1,padding:"8px",borderRadius:"10px",border:`1px solid ${C.border}`,fontSize:"19px",color:C.text,background:C.surfaceAlt,textAlign:"center",outline:"none"}}/>
             <button onClick={()=>setProduct(p=>({...p,grams:p.grams+10}))} style={{width:"36px",height:"36px",borderRadius:"10px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>+</button>
           </div>
         </div>
@@ -518,15 +520,15 @@ function ProductsLibrary({onSelect,onClose}){
   const remove=bc=>{const u=products.filter(p=>p.barcode!==bc);setProducts(u);ST.set("nutria-products",u);};
   const calc=(p,g)=>{const f=g/100;return{calories:Math.round(p.per100.calories*f),protein:Math.round(p.per100.protein*f*10)/10,carbs:Math.round(p.per100.carbs*f*10)/10,fat:Math.round(p.per100.fat*f*10)/10};};
   const filtered=products.filter(p=>p.name.toLowerCase().includes(search.toLowerCase())||p.brand?.toLowerCase().includes(search.toLowerCase()));
-  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"11px",padding:"10px 14px",fontSize:"14px",color:C.text,outline:"none",width:"100%"};
+  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"11px",padding:"10px 14px",fontSize:"19px",color:C.text,outline:"none",width:"100%"};
   return(<div style={{padding:"20px"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"17px"}}>📦 Mis productos</div><button onClick={onClose} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>📦 Mis productos</div><button onClick={onClose} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
     {products.length>0&&<input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 Buscar…" style={{...inp,marginBottom:"14px"}}/>}
     {filtered.length===0&&<div style={{textAlign:"center",padding:"40px"}}><div style={{fontSize:"40px",marginBottom:"10px"}}>📦</div><div style={{fontFamily:"Georgia,serif",fontStyle:"italic",color:C.textMid}}>{products.length===0?"Sin productos guardados":"Sin resultados"}</div></div>}
     <div style={{display:"flex",flexDirection:"column",gap:"10px",paddingBottom:"16px"}}>{filtered.map((p,i)=>{const g=grams[p.barcode]??100;const c=calc(p,g);return(<FadeIn key={p.barcode} delay={i*0.04}><Card>
-      <div style={{display:"flex",gap:"10px",alignItems:"center",marginBottom:"10px"}}>{p.image&&<img src={p.image} alt="" style={{width:"46px",height:"46px",borderRadius:"10px",objectFit:"contain",background:C.surfaceAlt,flexShrink:0}}/>}<div style={{flex:1}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"14px"}}>{p.name}</div>{p.brand&&<div style={{fontSize:"11px",color:C.textMid,fontFamily:"Georgia,serif"}}>{p.brand}</div>}</div><button onClick={()=>remove(p.barcode)} style={{background:"none",border:"none",fontSize:"18px",cursor:"pointer",color:C.textDim}}>🗑</button></div>
-      <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"10px"}}><button onClick={()=>setGrams(prev=>({...prev,[p.barcode]:Math.max(10,(prev[p.barcode]??100)-10)}))} style={{width:"28px",height:"28px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"16px",color:C.text}}>−</button><input type="number" value={g} onChange={e=>setGrams(prev=>({...prev,[p.barcode]:Math.max(1,parseInt(e.target.value)||1)}))} style={{width:"64px",padding:"5px 8px",borderRadius:"8px",border:`1px solid ${C.border}`,fontSize:"14px",color:C.text,background:C.surfaceAlt,textAlign:"center",outline:"none"}}/><button onClick={()=>setGrams(prev=>({...prev,[p.barcode]:(prev[p.barcode]??100)+10}))} style={{width:"28px",height:"28px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"16px",color:C.text}}>+</button><span style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif"}}>g</span></div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><MacroChips {...c}/><button onClick={()=>onSelect({name:p.name,emoji:"📦",...c})} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"9px",padding:"6px 13px",cursor:"pointer",fontSize:"12px",fontFamily:"Georgia,serif",marginLeft:"8px",fontWeight:700}}>+ Añadir</button></div>
+      <div style={{display:"flex",gap:"10px",alignItems:"center",marginBottom:"10px"}}>{p.image&&<img src={p.image} alt="" style={{width:"52px",height:"52px",borderRadius:"10px",objectFit:"contain",background:C.surfaceAlt,flexShrink:0}}/>}<div style={{flex:1}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>{p.name}</div>{p.brand&&<div style={{fontSize:"18px",color:C.textMid,fontFamily:"Georgia,serif"}}>{p.brand}</div>}</div><button onClick={()=>remove(p.barcode)} style={{background:"none",border:"none",fontSize:"18px",cursor:"pointer",color:C.textDim}}>🗑</button></div>
+      <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"10px"}}><button onClick={()=>setGrams(prev=>({...prev,[p.barcode]:Math.max(10,(prev[p.barcode]??100)-10)}))} style={{width:"36px",height:"36px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>−</button><input type="number" value={g} onChange={e=>setGrams(prev=>({...prev,[p.barcode]:Math.max(1,parseInt(e.target.value)||1)}))} style={{width:"64px",padding:"5px 8px",borderRadius:"8px",border:`1px solid ${C.border}`,fontSize:"19px",color:C.text,background:C.surfaceAlt,textAlign:"center",outline:"none"}}/><button onClick={()=>setGrams(prev=>({...prev,[p.barcode]:(prev[p.barcode]??100)+10}))} style={{width:"36px",height:"36px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>+</button><span style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>g</span></div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><MacroChips {...c}/><button onClick={()=>onSelect({name:p.name,emoji:"📦",...c})} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"9px",padding:"6px 13px",cursor:"pointer",fontSize:"18px",fontFamily:"Georgia,serif",marginLeft:"8px",fontWeight:700}}>+ Añadir</button></div>
     </Card></FadeIn>);})}
     </div>
   </div>);
@@ -539,9 +541,9 @@ function RecipesLibrary({onSelect,onClose}){
   const saveR=()=>{if(!form.name.trim()||!form.calories)return;const r={...form,id:Date.now(),calories:parseInt(form.calories),protein:parseFloat(form.protein)||0,carbs:parseFloat(form.carbs)||0,fat:parseFloat(form.fat)||0,servings:parseFloat(form.servings)||1};const u=[r,...recipes];setRecipes(u);ST.set("nutria-recipes",u);setShowForm(false);setForm({name:"",emoji:"🍲",calories:"",protein:"",carbs:"",fat:"",servings:"1",notes:""});};
   const del=id=>{const u=recipes.filter(r=>r.id!==id);setRecipes(u);ST.set("nutria-recipes",u);};
   const calcR=(r,s)=>{const f=s/r.servings;return{calories:Math.round(r.calories*f),protein:Math.round(r.protein*f*10)/10,carbs:Math.round(r.carbs*f*10)/10,fat:Math.round(r.fat*f*10)/10};};
-  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"10px",padding:"10px 12px",fontSize:"14px",color:C.text,outline:"none",width:"100%"};
+  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"10px",padding:"10px 12px",fontSize:"19px",color:C.text,outline:"none",width:"100%"};
   return(<div style={{padding:"20px"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"17px"}}>📖 Mis recetas</div><button onClick={onClose} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"16px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>📖 Mis recetas</div><button onClick={onClose} style={{background:"none",border:"none",fontSize:"22px",cursor:"pointer",color:C.textMid}}>✕</button></div>
     {!showForm&&<button onClick={()=>setShowForm(true)} style={{width:"100%",padding:"12px",background:C.accent,color:"#fff",border:"none",borderRadius:"12px",cursor:"pointer",fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"16px"}}>+ Nueva receta</button>}
     {showForm&&<FadeIn><Card style={{marginBottom:"16px"}}>
       <div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,marginBottom:"14px"}}>Nueva receta</div>
@@ -554,9 +556,9 @@ function RecipesLibrary({onSelect,onClose}){
     </Card></FadeIn>}
     {recipes.length===0&&!showForm&&<div style={{textAlign:"center",padding:"40px"}}><div style={{fontSize:"40px",marginBottom:"10px"}}>📖</div><div style={{fontFamily:"Georgia,serif",fontStyle:"italic",color:C.textMid}}>Sin recetas guardadas</div></div>}
     <div style={{display:"flex",flexDirection:"column",gap:"10px",paddingBottom:"16px"}}>{recipes.map((r,i)=>{const s=sel[r.id]??1;const c=calcR(r,s);return(<FadeIn key={r.id} delay={i*0.04}><Card>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}><div style={{display:"flex",gap:"10px",alignItems:"center"}}><span style={{fontSize:"28px"}}>{r.emoji}</span><div><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"14px"}}>{r.name}</div><div style={{fontSize:"11px",color:C.textMid,fontFamily:"Georgia,serif"}}>{r.calories}kcal · {r.servings} ración{r.servings!==1?"es":""}</div></div></div><button onClick={()=>del(r.id)} style={{background:"none",border:"none",fontSize:"17px",cursor:"pointer",color:C.textDim}}>🗑</button></div>
-      <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"10px"}}><span style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif"}}>Raciones:</span><button onClick={()=>setSel(p=>({...p,[r.id]:Math.max(0.5,(p[r.id]??1)-0.5)}))} style={{width:"26px",height:"26px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"16px",color:C.text}}>−</button><span style={{minWidth:"28px",textAlign:"center",fontFamily:"Georgia,serif",color:C.accent,fontWeight:700}}>{s}</span><button onClick={()=>setSel(p=>({...p,[r.id]:(p[r.id]??1)+0.5}))} style={{width:"26px",height:"26px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"16px",color:C.text}}>+</button></div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><MacroChips {...c}/><button onClick={()=>onSelect({name:r.name,emoji:r.emoji,...c})} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"9px",padding:"6px 13px",cursor:"pointer",fontSize:"12px",fontFamily:"Georgia,serif",marginLeft:"8px",fontWeight:700}}>+ Añadir</button></div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}><div style={{display:"flex",gap:"10px",alignItems:"center"}}><span style={{fontSize:"28px"}}>{r.emoji}</span><div><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>{r.name}</div><div style={{fontSize:"18px",color:C.textMid,fontFamily:"Georgia,serif"}}>{r.calories}kcal · {r.servings} ración{r.servings!==1?"es":""}</div></div></div><button onClick={()=>del(r.id)} style={{background:"none",border:"none",fontSize:"19px",cursor:"pointer",color:C.textDim}}>🗑</button></div>
+      <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"10px"}}><span style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>Raciones:</span><button onClick={()=>setSel(p=>({...p,[r.id]:Math.max(0.5,(p[r.id]??1)-0.5)}))} style={{width:"34px",height:"34px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>−</button><span style={{minWidth:"28px",textAlign:"center",fontFamily:"Georgia,serif",color:C.accent,fontWeight:700}}>{s}</span><button onClick={()=>setSel(p=>({...p,[r.id]:(p[r.id]??1)+0.5}))} style={{width:"34px",height:"34px",borderRadius:"8px",background:C.surfaceAlt,border:`1px solid ${C.border}`,cursor:"pointer",fontSize:"18px",color:C.text}}>+</button></div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><MacroChips {...c}/><button onClick={()=>onSelect({name:r.name,emoji:r.emoji,...c})} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"9px",padding:"6px 13px",cursor:"pointer",fontSize:"18px",fontFamily:"Georgia,serif",marginLeft:"8px",fontWeight:700}}>+ Añadir</button></div>
     </Card></FadeIn>);})}</div>
   </div>);
 }
@@ -574,28 +576,28 @@ function MonthlyTracker({profile}){
   const wS=wl[0]?.weight,wE=wl[wl.length-1]?.weight,wD=(wS&&wE)?(wE-wS).toFixed(1):null;
   const cc=cal=>{if(!cal)return C.empty;if(cal<=(profile?.calories||1650))return C.accentGreen+"99";if(cal<=(profile?.calories||1650)*1.1)return"#c09020";return C.over};
   const months=[];const now=new Date();for(let i=0;i<6;i++){const d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`);}
-  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"10px",padding:"10px 12px",fontSize:"15px",color:C.text,outline:"none",width:"100%"};
+  const inp={background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"10px",padding:"10px 12px",fontSize:"18px",color:C.text,outline:"none",width:"100%"};
   if(loading)return <div style={{textAlign:"center",padding:"40px",color:C.textDim,fontFamily:"Georgia,serif"}}>Cargando…</div>;
   return(<div style={{display:"flex",flexDirection:"column",gap:"14px",paddingBottom:"24px"}}>
-    <FadeIn><div style={{display:"flex",gap:"8px",alignItems:"center"}}><select value={vm} onChange={e=>setVm(e.target.value)} style={{flex:1,padding:"9px 12px",borderRadius:"10px",border:`1px solid ${C.border}`,background:C.surface,fontSize:"13px",color:C.text,outline:"none"}}>{months.map(m=><option key={m} value={m}>{fmtMonth(m)}</option>)}</select><button onClick={()=>setShowModal(true)} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"10px",padding:"9px 14px",cursor:"pointer",fontSize:"12px",fontFamily:"Georgia,serif",fontWeight:700,whiteSpace:"nowrap"}}>+ Registrar hoy</button></div></FadeIn>
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:"8px"}}>{[{l:"Registrados",v:`${ld.length}`,s:`de ${dim}`,c:C.text},{l:"Kcal prom.",v:avgCal||"—",s:"/día",c:avgCal&&avgCal<=(profile?.calories||1650)?C.accentGreen:C.over},{l:"En meta",v:dot,s:"días ✓",c:C.accentGreen},{l:"Humor",v:avgMood,s:MOODS.find(m=>m.v===Math.round(parseFloat(avgMood)||3))?.e||"",c:C.accent}].map((s,i)=>(<FadeIn key={s.l} delay={i*0.05}><Card style={{padding:"12px 8px",textAlign:"center"}}><div style={{fontSize:"17px",fontWeight:700,color:s.c,lineHeight:1}}>{s.v}</div><div style={{fontSize:"10px",color:C.textMid,marginTop:"2px",fontFamily:"Georgia,serif"}}>{s.s}</div><div style={{fontSize:"9px",color:C.textDim,marginTop:"2px",fontFamily:"Georgia,serif"}}>{s.l}</div></Card></FadeIn>))}</div>
-    {wl.length>0&&<FadeIn delay={0.1}><Card><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}><SLabel>⚖ Peso</SLabel><button onClick={()=>setShowChart(!showChart)} style={{fontSize:"11px",fontFamily:"Georgia,serif",background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"6px",padding:"3px 9px",cursor:"pointer",color:C.textMid}}>{showChart?"ocultar":"ver gráfica"}</button></div>
-      <div style={{display:"flex",gap:"16px",alignItems:"center"}}><div><div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif"}}>Inicio</div><div style={{fontSize:"16px",fontWeight:700,color:C.text}}>{wS} kg</div></div>{wl.length>1&&<><div style={{flex:1,height:"1px",background:C.border}}/><div style={{textAlign:"center"}}><div style={{fontSize:"18px",fontWeight:700,color:parseFloat(wD)<0?C.accentGreen:parseFloat(wD)>0?C.over:C.textMid}}>{parseFloat(wD)>0?"+":""}{wD} kg</div><div style={{fontSize:"10px",color:C.textDim,fontFamily:"Georgia,serif"}}>{parseFloat(wD)<0?"perdido 🎉":parseFloat(wD)>0?"ganado":"sin cambio"}</div></div><div style={{flex:1,height:"1px",background:C.border}}/><div style={{textAlign:"right"}}><div style={{fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif"}}>Ahora</div><div style={{fontSize:"16px",fontWeight:700,color:C.text}}>{wE} kg</div></div></>}</div>
-      {showChart&&wl.length>1&&(()=>{const W=300,H=70,P=18,ws=wl.map(d=>d.weight),mn=Math.min(...ws)-0.5,mx=Math.max(...ws)+0.5,xS=i=>P+(i/(wl.length-1))*(W-P*2),yS=w=>H-P-((w-mn)/(mx-mn))*(H-P*2);return(<svg viewBox={`0 0 ${W} ${H}`} style={{width:"100%",height:"auto",marginTop:"10px"}}><path d={wl.map((d,i)=>`${i===0?"M":"L"}${xS(i)},${yS(d.weight)}`).join(" ")} fill="none" stroke={C.accentGreen} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>{wl.map((d,i)=><g key={i}><circle cx={xS(i)} cy={yS(d.weight)} r="3.5" fill={C.accentGreen}/>{(i===0||i===wl.length-1)&&<text x={xS(i)} y={yS(d.weight)-8} textAnchor="middle" fontSize="9" fill={C.accentGreen} fontFamily="Georgia, serif">{d.weight}</text>}</g>)}</svg>);})()}
+    <FadeIn><div style={{display:"flex",gap:"8px",alignItems:"center"}}><select value={vm} onChange={e=>setVm(e.target.value)} style={{flex:1,padding:"9px 12px",borderRadius:"10px",border:`1px solid ${C.border}`,background:C.surface,fontSize:"18px",color:C.text,outline:"none"}}>{months.map(m=><option key={m} value={m}>{fmtMonth(m)}</option>)}</select><button onClick={()=>setShowModal(true)} style={{background:C.accent,color:"#fff",border:"none",borderRadius:"10px",padding:"9px 14px",cursor:"pointer",fontSize:"18px",fontFamily:"Georgia,serif",fontWeight:700,whiteSpace:"nowrap"}}>+ Registrar hoy</button></div></FadeIn>
+    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr 1fr",gap:"8px"}}>{[{l:"Registrados",v:`${ld.length}`,s:`de ${dim}`,c:C.text},{l:"Kcal prom.",v:avgCal||"—",s:"/día",c:avgCal&&avgCal<=(profile?.calories||1650)?C.accentGreen:C.over},{l:"En meta",v:dot,s:"días ✓",c:C.accentGreen},{l:"Humor",v:avgMood,s:MOODS.find(m=>m.v===Math.round(parseFloat(avgMood)||3))?.e||"",c:C.accent}].map((s,i)=>(<FadeIn key={s.l} delay={i*0.05}><Card style={{padding:"12px 8px",textAlign:"center"}}><div style={{fontSize:"19px",fontWeight:700,color:s.c,lineHeight:1}}>{s.v}</div><div style={{fontSize:"19px",color:C.textMid,marginTop:"2px",fontFamily:"Georgia,serif"}}>{s.s}</div><div style={{fontSize:"18px",color:C.textDim,marginTop:"2px",fontFamily:"Georgia,serif"}}>{s.l}</div></Card></FadeIn>))}</div>
+    {wl.length>0&&<FadeIn delay={0.1}><Card><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"10px"}}><SLabel>⚖ Peso</SLabel><button onClick={()=>setShowChart(!showChart)} style={{fontSize:"18px",fontFamily:"Georgia,serif",background:C.surfaceAlt,border:`1px solid ${C.border}`,borderRadius:"6px",padding:"3px 9px",cursor:"pointer",color:C.textMid}}>{showChart?"ocultar":"ver gráfica"}</button></div>
+      <div style={{display:"flex",gap:"16px",alignItems:"center"}}><div><div style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>Inicio</div><div style={{fontSize:"18px",fontWeight:700,color:C.text}}>{wS} kg</div></div>{wl.length>1&&<><div style={{flex:1,height:"1px",background:C.border}}/><div style={{textAlign:"center"}}><div style={{fontSize:"18px",fontWeight:700,color:parseFloat(wD)<0?C.accentGreen:parseFloat(wD)>0?C.over:C.textMid}}>{parseFloat(wD)>0?"+":""}{wD} kg</div><div style={{fontSize:"19px",color:C.textDim,fontFamily:"Georgia,serif"}}>{parseFloat(wD)<0?"perdido 🎉":parseFloat(wD)>0?"ganado":"sin cambio"}</div></div><div style={{flex:1,height:"1px",background:C.border}}/><div style={{textAlign:"right"}}><div style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>Ahora</div><div style={{fontSize:"18px",fontWeight:700,color:C.text}}>{wE} kg</div></div></>}</div>
+      {showChart&&wl.length>1&&(()=>{const W=300,H=70,P=18,ws=wl.map(d=>d.weight),mn=Math.min(...ws)-0.5,mx=Math.max(...ws)+0.5,xS=i=>P+(i/(wl.length-1))*(W-P*2),yS=w=>H-P-((w-mn)/(mx-mn))*(H-P*2);return(<svg viewBox={`0 0 ${W} ${H}`} style={{width:"100%",height:"auto",marginTop:"10px"}}><path d={wl.map((d,i)=>`${i===0?"M":"L"}${xS(i)},${yS(d.weight)}`).join(" ")} fill="none" stroke={C.accentGreen} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>{wl.map((d,i)=><g key={i}><circle cx={xS(i)} cy={yS(d.weight)} r="3.5" fill={C.accentGreen}/>{(i===0||i===wl.length-1)&&<text x={xS(i)} y={yS(d.weight)-8} textAnchor="middle" fontSize="13" fill={C.accentGreen} fontFamily="Georgia, serif">{d.weight}</text>}</g>)}</svg>);})()}
     </Card></FadeIn>}
     <FadeIn delay={0.15}><Card><SLabel>Calendario · {fmtMonth(vm)}</SLabel>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:"4px",marginBottom:"6px"}}>{["D","L","M","X","J","V","S"].map(d=><div key={d} style={{textAlign:"center",fontSize:"10px",color:C.textDim,fontFamily:"Georgia,serif"}}>{d}</div>)}</div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:"4px"}}>{Array(fd===0?6:fd-1).fill(null).map((_,i)=><div key={`e${i}`}/>)}{Array(dim).fill(null).map((_,i)=>{const d=i+1,dk=`${vm}-${String(d).padStart(2,"0")}`;const dd=days[dk],isT=dk===today,isFut=dk>today;return(<div key={d} onClick={()=>dd&&delDay(vm,dk)} style={{aspectRatio:"1",borderRadius:"5px",background:isFut?"transparent":dd?cc(dd.calories):C.empty,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"9px",fontFamily:"Georgia,serif",color:C.text,border:isT?`2px solid ${C.accent}`:`1px solid ${C.border}40`,cursor:dd?"pointer":"default",position:"relative",opacity:isFut?0.3:1}}>{d}{dd?.mood&&<span style={{position:"absolute",top:"-3px",right:"-3px",fontSize:"7px"}}>{MOODS.find(m=>m.v===dd.mood)?.e}</span>}</div>);})}</div>
-      <div style={{display:"flex",gap:"8px",marginTop:"10px",flexWrap:"wrap"}}>{[{c:C.accentGreen+"99",l:"En meta"},{c:"#c09020",l:"Sobre meta"},{c:C.over,l:"Exceso"},{c:C.empty,l:"Sin registro"}].map(x=><div key={x.l} style={{display:"flex",alignItems:"center",gap:"4px"}}><div style={{width:"9px",height:"9px",borderRadius:"2px",background:x.c}}/><span style={{fontSize:"10px",color:C.textDim,fontFamily:"Georgia,serif"}}>{x.l}</span></div>)}</div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:"4px",marginBottom:"6px"}}>{["D","L","M","X","J","V","S"].map(d=><div key={d} style={{textAlign:"center",fontSize:"19px",color:C.textDim,fontFamily:"Georgia,serif"}}>{d}</div>)}</div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:"4px"}}>{Array(fd===0?6:fd-1).fill(null).map((_,i)=><div key={`e${i}`}/>)}{Array(dim).fill(null).map((_,i)=>{const d=i+1,dk=`${vm}-${String(d).padStart(2,"0")}`;const dd=days[dk],isT=dk===today,isFut=dk>today;return(<div key={d} onClick={()=>dd&&delDay(vm,dk)} style={{aspectRatio:"1",borderRadius:"5px",background:isFut?"transparent":dd?cc(dd.calories):C.empty,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"18px",fontFamily:"Georgia,serif",color:C.text,border:isT?`2px solid ${C.accent}`:`1px solid ${C.border}40`,cursor:dd?"pointer":"default",position:"relative",opacity:isFut?0.3:1}}>{d}{dd?.mood&&<span style={{position:"absolute",top:"-3px",right:"-3px",fontSize:"18px"}}>{MOODS.find(m=>m.v===dd.mood)?.e}</span>}</div>);})}</div>
+      <div style={{display:"flex",gap:"8px",marginTop:"10px",flexWrap:"wrap"}}>{[{c:C.accentGreen+"99",l:"En meta"},{c:"#c09020",l:"Sobre meta"},{c:C.over,l:"Exceso"},{c:C.empty,l:"Sin registro"}].map(x=><div key={x.l} style={{display:"flex",alignItems:"center",gap:"4px"}}><div style={{width:"9px",height:"9px",borderRadius:"2px",background:x.c}}/><span style={{fontSize:"19px",color:C.textDim,fontFamily:"Georgia,serif"}}>{x.l}</span></div>)}</div>
     </Card></FadeIn>
-    {ld.length>0&&<FadeIn delay={0.2}><Card><SLabel>📝 Notas</SLabel><div style={{display:"flex",flexDirection:"column",gap:"8px",maxHeight:"200px",overflowY:"auto"}}>{Object.entries(days).sort((a,b)=>b[0].localeCompare(a[0])).map(([dk,d])=>d.notes&&<div key={dk} style={{display:"flex",gap:"10px",alignItems:"flex-start"}}><div style={{minWidth:"42px",fontSize:"11px",color:C.textDim,fontFamily:"Georgia,serif"}}>{fmtDate(dk)}</div><div style={{flex:1,fontSize:"13px",color:C.textMid,lineHeight:1.4,fontStyle:"italic"}}>"{d.notes}"</div><div style={{fontSize:"14px"}}>{MOODS.find(m=>m.v===d.mood)?.e}</div></div>)}</div></Card></FadeIn>}
+    {ld.length>0&&<FadeIn delay={0.2}><Card><SLabel>📝 Notas</SLabel><div style={{display:"flex",flexDirection:"column",gap:"8px",maxHeight:"200px",overflowY:"auto"}}>{Object.entries(days).sort((a,b)=>b[0].localeCompare(a[0])).map(([dk,d])=>d.notes&&<div key={dk} style={{display:"flex",gap:"10px",alignItems:"flex-start"}}><div style={{minWidth:"42px",fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>{fmtDate(dk)}</div><div style={{flex:1,fontSize:"18px",color:C.textMid,lineHeight:1.4,fontStyle:"italic"}}>"{d.notes}"</div><div style={{fontSize:"19px"}}>{MOODS.find(m=>m.v===d.mood)?.e}</div></div>)}</div></Card></FadeIn>}
     <SlideUp show={showModal} onClose={()=>setShowModal(false)}><div style={{padding:"20px 20px 8px"}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"18px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"16px"}}>Registrar hoy · {fmtDate(todayKey())}</div><button onClick={()=>setShowModal(false)} style={{background:"none",border:"none",fontSize:"20px",cursor:"pointer",color:C.textMid}}>✕</button></div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"18px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"18px"}}>Registrar hoy · {fmtDate(todayKey())}</div><button onClick={()=>setShowModal(false)} style={{background:"none",border:"none",fontSize:"20px",cursor:"pointer",color:C.textMid}}>✕</button></div>
       <div style={{display:"flex",flexDirection:"column",gap:"14px",paddingBottom:"20px"}}>
         <div><SLabel>Calorías totales</SLabel><input type="number" placeholder="ej. 1580" value={form.calories} onChange={e=>setForm(p=>({...p,calories:e.target.value}))} style={inp}/></div>
         <div><SLabel>Peso (opcional)</SLabel><input type="number" step="0.1" placeholder="ej. 71.5" value={form.weight} onChange={e=>setForm(p=>({...p,weight:e.target.value}))} style={inp}/></div>
-        <div><SLabel>¿Cómo te has sentido?</SLabel><div style={{display:"flex",gap:"8px",justifyContent:"center"}}>{MOODS.map(m=><button key={m.v} onClick={()=>setForm(p=>({...p,mood:m.v}))} style={{width:"46px",height:"46px",borderRadius:"12px",border:`2px solid ${form.mood===m.v?C.accent:C.border}`,fontSize:"22px",cursor:"pointer",background:form.mood===m.v?C.accent+"22":C.surfaceAlt,transition:"all 0.15s",transform:form.mood===m.v?"scale(1.1)":"scale(1)"}}>{m.e}</button>)}</div></div>
-        <div><SLabel>Nota (opcional)</SLabel><textarea value={form.notes} onChange={e=>setForm(p=>({...p,notes:e.target.value}))} placeholder="¿Cómo fue el día?" rows={2} style={{...inp,fontSize:"13px",resize:"none"}}/></div>
+        <div><SLabel>¿Cómo te has sentido?</SLabel><div style={{display:"flex",gap:"8px",justifyContent:"center"}}>{MOODS.map(m=><button key={m.v} onClick={()=>setForm(p=>({...p,mood:m.v}))} style={{width:"52px",height:"52px",borderRadius:"12px",border:`2px solid ${form.mood===m.v?C.accent:C.border}`,fontSize:"22px",cursor:"pointer",background:form.mood===m.v?C.accent+"22":C.surfaceAlt,transition:"all 0.15s",transform:form.mood===m.v?"scale(1.1)":"scale(1)"}}>{m.e}</button>)}</div></div>
+        <div><SLabel>Nota (opcional)</SLabel><textarea value={form.notes} onChange={e=>setForm(p=>({...p,notes:e.target.value}))} placeholder="¿Cómo fue el día?" rows={2} style={{...inp,fontSize:"18px",resize:"none"}}/></div>
         <button onClick={logToday} disabled={saving||!form.calories} style={{padding:"13px",background:saving||!form.calories?C.surfaceAlt:C.accent,color:saving||!form.calories?C.textDim:"#fff",border:"none",borderRadius:"12px",fontFamily:"Georgia,serif",cursor:"pointer",fontWeight:700}}>{saving?"Guardando…":"Guardar ✓"}</button>
       </div>
     </div></SlideUp>
@@ -635,10 +637,10 @@ function MainApp({profile,onResetProfile}){
     return(<FadeIn key={i} delay={0} y={6}>
       <div style={{display:"flex",flexDirection:isUser?"row-reverse":"row",gap:"8px",alignItems:"flex-end"}}>
         {!isUser&&<OtterAvatar avatarId={profile.avatar}/>}
-        <div style={{maxWidth:"82%",padding:"12px 15px",borderRadius:isUser?"18px 18px 4px 18px":"18px 18px 18px 4px",background:isUser?C.accent:msg.type==="support"?"#f5efd8":C.surface,color:isUser?"#fff":C.text,fontSize:"14px",lineHeight:"1.6",border:`1px solid ${isUser?C.accent:msg.type==="support"?"#d4c090":C.border}`,borderLeft:msg.type==="support"?`3px solid ${C.accent}`:undefined}}>
+        <div style={{maxWidth:"82%",padding:"12px 15px",borderRadius:isUser?"18px 18px 4px 18px":"18px 18px 18px 4px",background:isUser?C.accent:msg.type==="support"?"#f5efd8":C.surface,color:isUser?"#fff":C.text,fontSize:"19px",lineHeight:"1.6",border:`1px solid ${isUser?C.accent:msg.type==="support"?"#d4c090":C.border}`,borderLeft:msg.type==="support"?`3px solid ${C.accent}`:undefined}}>
           {msg.imagePreview&&<img src={msg.imagePreview} alt="" style={{width:"100%",borderRadius:"10px",marginBottom:"8px",maxHeight:"160px",objectFit:"cover"}}/>}
           {isUser?<span>{msg.text}</span>:msg.type==="meal"?(
-            <div><div style={{fontSize:"22px",marginBottom:"4px"}}>{msg.emoji}</div><div style={{fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"8px",color:C.text}}>{msg.name}</div><MacroChips calories={msg.calories} protein={msg.protein} carbs={msg.carbs} fat={msg.fat}/>{msg.feedback&&<p style={{margin:"8px 0 0",fontSize:"13px",color:C.textMid,lineHeight:1.5}}>{msg.feedback}</p>}</div>
+            <div><div style={{fontSize:"22px",marginBottom:"4px"}}>{msg.emoji}</div><div style={{fontFamily:"Georgia,serif",fontWeight:700,marginBottom:"8px",color:C.text}}>{msg.name}</div><MacroChips calories={msg.calories} protein={msg.protein} carbs={msg.carbs} fat={msg.fat}/>{msg.feedback&&<p style={{margin:"8px 0 0",fontSize:"18px",color:C.textMid,lineHeight:1.5}}>{msg.feedback}</p>}</div>
           ):(
             <span style={{whiteSpace:"pre-wrap"}}>
               {msg.type==="support"&&<span style={{display:"block",marginBottom:"6px",fontSize:"18px"}}>🤍</span>}
@@ -659,23 +661,23 @@ function MainApp({profile,onResetProfile}){
       <div style={{display:"flex",alignItems:"center",gap:"12px"}}>
         <div style={{animation:"floatOtter 3s ease-in-out infinite"}}><OtterLogo size={52}/></div>
         <div>
-          <div style={{fontSize:"10px",letterSpacing:"0.22em",color:C.accentGreenDim,fontFamily:"Georgia,serif",lineHeight:1}}>hola, {profile.name.toLowerCase()}</div>
-          <h1 style={{margin:"3px 0 0",fontSize:"27px",fontFamily:"Georgia,serif",fontWeight:700,color:C.surface,letterSpacing:"-0.3px",lineHeight:1}}>Nutr<span style={{color:C.accent}}>IA</span></h1>
+          <div style={{fontSize:"19px",letterSpacing:"0.22em",color:C.textOnDark,fontFamily:"Georgia,serif",lineHeight:1,fontWeight:700}}>hola, {profile.name.toLowerCase()}</div>
+          <h1 style={{margin:"3px 0 0",fontSize:"32px",fontFamily:"Georgia,serif",fontWeight:700,color:C.surface,letterSpacing:"-0.3px",lineHeight:1}}>Nutr<span style={{color:C.accent}}>IA</span></h1>
         </div>
       </div>
-      <button onClick={()=>setShowProfile(!showProfile)} style={{background:showProfile?C.accent:C.surface,border:`1px solid ${showProfile?C.accent:C.border}`,borderRadius:"12px",padding:"8px 13px",cursor:"pointer",fontSize:"12px",fontFamily:"Georgia,serif",color:showProfile?C.bg:C.textMid,transition:"all 0.2s"}}>{showProfile?"✕":"👤 Perfil"}</button>
+      <button onClick={()=>setShowProfile(!showProfile)} style={{background:showProfile?C.accent:C.surface,border:`1px solid ${showProfile?C.accent:C.border}`,borderRadius:"12px",padding:"8px 13px",cursor:"pointer",fontSize:"18px",fontFamily:"Georgia,serif",color:showProfile?C.bg:C.textMid,transition:"all 0.2s"}}>{showProfile?"✕":"👤 Perfil"}</button>
     </div>
 
     {showProfile&&<FadeIn><div style={{width:"100%",maxWidth:"500px",padding:"0 20px 12px"}}><Card>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:"12px"}}>
-        <div style={{display:"flex",alignItems:"center",gap:"10px"}}><OtterLogoColored size={32} body={(AVATARS.find(a=>a.id===profile.avatar)||AVATARS[1]).body} belly={(AVATARS.find(a=>a.id===profile.avatar)||AVATARS[1]).belly}/><div><div style={{fontSize:"10px",color:C.textDim,fontFamily:"Georgia,serif"}}>Tu objetivo</div><div style={{fontSize:"14px",fontFamily:"Georgia,serif",color:C.text,marginTop:"1px"}}>{GOAL_ADJUSTMENTS[profile.goal]?.label}</div></div></div>
-        <button onClick={onResetProfile} style={{fontSize:"10px",fontFamily:"Georgia,serif",background:C.goodBg,border:`1px solid ${C.accentGreen}60`,borderRadius:"6px",padding:"4px 10px",cursor:"pointer",color:C.accentGreen,fontWeight:700}}>Editar</button>
+        <div style={{display:"flex",alignItems:"center",gap:"10px"}}><OtterLogoColored size={32} body={(AVATARS.find(a=>a.id===profile.avatar)||AVATARS[1]).body} belly={(AVATARS.find(a=>a.id===profile.avatar)||AVATARS[1]).belly}/><div><div style={{fontSize:"19px",color:C.textDim,fontFamily:"Georgia,serif"}}>Tu objetivo</div><div style={{fontSize:"19px",fontFamily:"Georgia,serif",color:C.text,marginTop:"1px"}}>{GOAL_ADJUSTMENTS[profile.goal]?.label}</div></div></div>
+        <button onClick={onResetProfile} style={{fontSize:"19px",fontFamily:"Georgia,serif",background:C.goodBg,border:`1px solid ${C.accentGreen}60`,borderRadius:"6px",padding:"4px 10px",cursor:"pointer",color:C.accentGreen,fontWeight:700}}>Editar</button>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6px",marginBottom:"12px",fontSize:"12px",fontFamily:"Georgia,serif",color:C.textMid}}>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6px",marginBottom:"12px",fontSize:"18px",fontFamily:"Georgia,serif",color:C.textMid}}>
         <div>{profile.gender==="female"?"Mujer":"Hombre"} · {profile.age} años</div><div>{profile.weight}kg · {profile.height}cm</div>
         <div>{ACTIVITY_FACTORS[profile.activity]?.label}</div><div>Gasto diario: {profile.tdee} kcal</div>
       </div>
-      <div style={{display:"flex",gap:"7px",flexWrap:"wrap"}}>{[["🔥",`${profile.calories} kcal`,C.accent],["🥩",`${profile.protein}g`,C.accentGreen],["🌾",`${profile.carbs}g`,"#b07818"],["🥑",`${profile.fat}g`,"#8058a8"]].map(([ico,v,col])=><span key={v} style={{fontSize:"12px",background:C.surfaceAlt,borderRadius:"8px",padding:"3px 10px",border:`1px solid ${C.border}`,color:col,fontWeight:700}}>{ico} {v}</span>)}</div>
+      <div style={{display:"flex",gap:"7px",flexWrap:"wrap"}}>{[["🔥",`${profile.calories} kcal`,C.accent],["🥩",`${profile.protein}g`,C.accentGreen],["🌾",`${profile.carbs}g`,"#b07818"],["🥑",`${profile.fat}g`,"#8058a8"]].map(([ico,v,col])=><span key={v} style={{fontSize:"18px",background:C.surfaceAlt,borderRadius:"8px",padding:"3px 10px",border:`1px solid ${C.border}`,color:col,fontWeight:700}}>{ico} {v}</span>)}</div>
     </Card></div></FadeIn>}
 
     {tab!=="monthly"&&<div style={{width:"100%",maxWidth:"500px",padding:"0 20px 14px",display:"flex",flexDirection:"column",gap:"10px"}}>
@@ -687,16 +689,16 @@ function MainApp({profile,onResetProfile}){
               <circle cx="40" cy="40" r="33" fill="none" stroke={over?C.over:C.accentGreen} strokeWidth="7" strokeDasharray={`${2*Math.PI*33}`} strokeDashoffset={`${2*Math.PI*33*(1-calPct/100)}`} strokeLinecap="round" style={{transition:"stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1)"}}/>
             </svg>
             <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
-              <span style={{fontSize:"15px",fontWeight:700,color:over?C.over:C.text,lineHeight:1}}>{totals.calories}</span>
-              <span style={{fontSize:"9px",color:C.textDim,fontFamily:"Georgia,serif"}}>kcal</span>
+              <span style={{fontSize:"18px",fontWeight:700,color:over?C.over:C.text,lineHeight:1}}>{totals.calories}</span>
+              <span style={{fontSize:"18px",color:C.textDim,fontFamily:"Georgia,serif"}}>kcal</span>
             </div>
           </div>
           <div style={{flex:1}}>
             <div style={{display:"flex",alignItems:"baseline",gap:"6px",marginBottom:"2px"}}>
-              <span style={{fontSize:"11px",color:over?C.over:C.textMid,fontFamily:"Georgia,serif",fontWeight:over?700:400}}>{over?`⚠ ${Math.abs(rem)} kcal exceso`:`${rem} kcal restantes`}</span>
-              {calBonus>0&&<span style={{fontSize:"10px",color:C.accentGreen,fontFamily:"Georgia,serif",background:C.goodBg,padding:"1px 6px",borderRadius:"4px",border:`1px solid ${C.accentGreen}60`}}>+{calBonus} ejercicio</span>}
+              <span style={{fontSize:"18px",color:over?C.over:C.textMid,fontFamily:"Georgia,serif",fontWeight:over?700:400}}>{over?`⚠ ${Math.abs(rem)} kcal exceso`:`${rem} kcal restantes`}</span>
+              {calBonus>0&&<span style={{fontSize:"19px",color:C.accentGreen,fontFamily:"Georgia,serif",background:C.goodBg,padding:"1px 6px",borderRadius:"4px",border:`1px solid ${C.accentGreen}60`}}>+{calBonus} ejercicio</span>}
             </div>
-            <div style={{fontSize:"10px",color:C.textDim,fontFamily:"Georgia,serif",marginBottom:"9px"}}>Meta: {adjustedCal} kcal · {meals.length} comida{meals.length!==1?"s":""}</div>
+            <div style={{fontSize:"19px",color:C.textDim,fontFamily:"Georgia,serif",marginBottom:"9px"}}>Meta: {adjustedCal} kcal · {meals.length} comida{meals.length!==1?"s":""}</div>
             <MacroBar label="Proteína" value={totals.protein} target={profile.protein} color={C.accentGreen}/>
             <MacroBar label="Carbos" value={totals.carbs} target={profile.carbs} color="#b07818"/>
             <MacroBar label="Grasa" value={totals.fat} target={profile.fat} color="#8058a8"/>
@@ -707,7 +709,7 @@ function MainApp({profile,onResetProfile}){
     </div>}
 
     <div style={{width:"100%",maxWidth:"500px",padding:"0 20px 12px",display:"flex",gap:"6px"}}>
-      {TABS.map(([t,label])=><button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"10px 4px",borderRadius:"12px",border:`1px solid ${tab===t?C.accent:C.border}`,cursor:"pointer",background:tab===t?C.accent:C.surface,color:tab===t?"#fff":C.textMid,fontSize:"11px",fontFamily:"Georgia,serif",transition:"all 0.25s",whiteSpace:"nowrap",fontWeight:tab===t?700:400}}>{label}</button>)}
+      {TABS.map(([t,label])=><button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"10px 4px",borderRadius:"12px",border:`1px solid ${tab===t?C.accent:C.border}`,cursor:"pointer",background:tab===t?C.accent:C.surface,color:tab===t?"#fff":C.textMid,fontSize:"18px",fontFamily:"Georgia,serif",transition:"all 0.25s",whiteSpace:"nowrap",fontWeight:tab===t?700:400}}>{label}</button>)}
     </div>
 
     <div style={{width:"100%",maxWidth:"500px",padding:"0 20px",flex:1}}>
@@ -717,30 +719,30 @@ function MainApp({profile,onResetProfile}){
           {loading&&<div style={{display:"flex",gap:"8px",alignItems:"flex-end"}}><OtterAvatar avatarId={profile.avatar}/><div style={{background:C.surface,borderRadius:"18px 18px 18px 4px",padding:"12px 16px",border:`1px solid ${C.border}`}}><Dots/></div></div>}
         </div>
         <div style={{paddingTop:"10px"}}>
-          {imgPreview&&<div style={{position:"relative",display:"inline-block",marginBottom:"8px"}}><img src={imgPreview} alt="" style={{height:"64px",borderRadius:"10px",objectFit:"cover",border:`1px solid ${C.border}`}}/><button onClick={()=>{setImage(null);setImgPreview(null);}} style={{position:"absolute",top:"-6px",right:"-6px",width:"18px",height:"18px",borderRadius:"50%",background:C.accent,color:"#fff",border:"none",cursor:"pointer",fontSize:"10px",fontWeight:700}}>✕</button></div>}
+          {imgPreview&&<div style={{position:"relative",display:"inline-block",marginBottom:"8px"}}><img src={imgPreview} alt="" style={{height:"64px",borderRadius:"10px",objectFit:"cover",border:`1px solid ${C.border}`}}/><button onClick={()=>{setImage(null);setImgPreview(null);}} style={{position:"absolute",top:"-6px",right:"-6px",width:"18px",height:"18px",borderRadius:"50%",background:C.accent,color:"#fff",border:"none",cursor:"pointer",fontSize:"19px",fontWeight:700}}>✕</button></div>}
           <div style={{display:"flex",gap:"7px",marginBottom:"9px"}}>
             {[{icon:"📷",label:"Foto",action:()=>fileRef.current.click()},{icon:"〒",label:"Barras",action:()=>setShowScanner(true)},{icon:"📦",label:"Productos",action:()=>setShowProducts(true)},{icon:"📖",label:"Recetas",action:()=>setShowRecipes(true)}].map(b=>(
               <button key={b.label} className="abtn" onClick={b.action} style={{flex:1,padding:"9px 4px",background:C.surface,border:`1px solid ${C.border}`,borderRadius:"11px",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:"3px",transition:"all 0.15s"}}>
-                <span style={{fontSize:"17px"}}>{b.icon}</span><span style={{fontSize:"9px",fontFamily:"Georgia,serif",color:C.textMid}}>{b.label}</span>
+                <span style={{fontSize:"19px"}}>{b.icon}</span><span style={{fontSize:"18px",fontFamily:"Georgia,serif",color:C.textMid}}>{b.label}</span>
               </button>
             ))}
           </div>
           <input type="file" accept="image/*" ref={fileRef} onChange={handleImg} style={{display:"none"}}/>
           <div style={{background:C.surface,borderRadius:"16px",padding:"10px 12px",border:`1px solid ${C.border}`,display:"flex",gap:"8px",alignItems:"flex-end"}}>
-            <textarea value={input} onChange={e=>setInput(e.target.value)} onKeyDown={handleKey} placeholder={`Cuéntame, ${profile.name.split(" ")[0]}…`} rows={2} style={{flex:1,border:"none",outline:"none",fontSize:"14px",color:C.text,background:"transparent",lineHeight:"1.5",maxHeight:"90px",overflowY:"auto"}}/>
+            <textarea value={input} onChange={e=>setInput(e.target.value)} onKeyDown={handleKey} placeholder={`Cuéntame, ${profile.name.split(" ")[0]}…`} rows={2} style={{flex:1,border:"none",outline:"none",fontSize:"19px",color:C.text,background:"transparent",lineHeight:"1.5",maxHeight:"90px",overflowY:"auto"}}/>
             <button onClick={send} disabled={loading||(!input.trim()&&!image)} style={{background:(loading||(!input.trim()&&!image))?C.surfaceAlt:C.accent,border:"none",borderRadius:"10px",width:"38px",height:"38px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,color:(loading||(!input.trim()&&!image))?C.textDim:"#fff",fontWeight:700,fontSize:"18px"}}>→</button>
           </div>
           <div style={{display:"flex",gap:"6px",marginTop:"8px",flexWrap:"wrap"}}>
-            {quick.map(a=><button key={a} className="qbtn" onClick={()=>setInput(a)} style={{fontSize:"11px",fontFamily:"Georgia,serif",background:C.surface,border:`1px solid ${C.border}`,borderRadius:"8px",padding:"5px 10px",cursor:"pointer",color:C.textMid,transition:"all 0.15s"}}>{a}</button>)}
+            {quick.map(a=><button key={a} className="qbtn" onClick={()=>setInput(a)} style={{fontSize:"18px",fontFamily:"Georgia,serif",background:C.surface,border:`1px solid ${C.border}`,borderRadius:"8px",padding:"5px 10px",cursor:"pointer",color:C.textMid,transition:"all 0.15s"}}>{a}</button>)}
           </div>
         </div>
       </>}
 
       {tab==="meals"&&<div style={{overflowY:"auto",maxHeight:"460px",display:"flex",flexDirection:"column",gap:"10px",paddingBottom:"10px"}}>
         {meals.length===0
-          ?<div style={{textAlign:"center",padding:"48px 20px"}}><div style={{display:"flex",justifyContent:"center",marginBottom:"14px",opacity:0.5}}><OtterLogo size={52}/></div><div style={{fontFamily:"Georgia,serif",fontStyle:"italic",fontSize:"15px",color:C.textMid}}>Aún no has registrado comidas hoy</div></div>
-          :<>{meals.map((meal,i)=><FadeIn key={meal.id} delay={i*0.04}><Card><div style={{display:"flex",gap:"12px",alignItems:"flex-start"}}><div style={{fontSize:"26px",paddingTop:"2px"}}>{meal.emoji}</div><div style={{flex:1}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:"6px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"14px"}}>{meal.name}</div><span style={{fontSize:"10px",color:C.textDim,fontFamily:"Georgia,serif"}}>#{i+1}</span></div><MacroChips calories={meal.calories} protein={meal.protein} carbs={meal.carbs} fat={meal.fat}/>{meal.feedback&&<p style={{margin:"6px 0 0",fontSize:"12px",color:C.textMid,fontStyle:"italic",lineHeight:1.4}}>{meal.feedback}</p>}</div></div></Card></FadeIn>)}
-          <FadeIn delay={meals.length*0.04}><div style={{background:over?C.overBg:C.goodBg,borderRadius:"14px",padding:"13px 16px",border:`1px solid ${over?C.over+"60":C.accentGreen+"60"}`}}><div style={{fontSize:"12px",fontFamily:"Georgia,serif",color:over?C.over:C.accentGreen,fontWeight:700,marginBottom:"3px"}}>{over?"⚠ Has superado la meta":"✓ Dentro de tu meta"}</div><div style={{fontSize:"12px",color:C.textMid}}>{over?`${totals.calories} kcal · ${Math.abs(rem)} de exceso`:`${totals.calories} / ${adjustedCal} kcal · quedan ${rem}`}</div></div></FadeIn></>}
+          ?<div style={{textAlign:"center",padding:"48px 20px"}}><div style={{display:"flex",justifyContent:"center",marginBottom:"14px",opacity:0.5}}><OtterLogo size={52}/></div><div style={{fontFamily:"Georgia,serif",fontStyle:"italic",fontSize:"18px",color:C.textMid}}>Aún no has registrado comidas hoy</div></div>
+          :<>{meals.map((meal,i)=><FadeIn key={meal.id} delay={i*0.04}><Card><div style={{display:"flex",gap:"12px",alignItems:"flex-start"}}><div style={{fontSize:"26px",paddingTop:"2px"}}>{meal.emoji}</div><div style={{flex:1}}><div style={{display:"flex",justifyContent:"space-between",marginBottom:"6px"}}><div style={{fontFamily:"Georgia,serif",fontWeight:700,color:C.text,fontSize:"19px"}}>{meal.name}</div><span style={{fontSize:"19px",color:C.textDim,fontFamily:"Georgia,serif"}}>#{i+1}</span></div><MacroChips calories={meal.calories} protein={meal.protein} carbs={meal.carbs} fat={meal.fat}/>{meal.feedback&&<p style={{margin:"6px 0 0",fontSize:"18px",color:C.textMid,fontStyle:"italic",lineHeight:1.4}}>{meal.feedback}</p>}</div></div></Card></FadeIn>)}
+          <FadeIn delay={meals.length*0.04}><div style={{background:over?C.overBg:C.goodBg,borderRadius:"14px",padding:"13px 16px",border:`1px solid ${over?C.over+"60":C.accentGreen+"60"}`}}><div style={{fontSize:"18px",fontFamily:"Georgia,serif",color:over?C.over:C.accentGreen,fontWeight:700,marginBottom:"3px"}}>{over?"⚠ Has superado la meta":"✓ Dentro de tu meta"}</div><div style={{fontSize:"18px",color:C.textMid}}>{over?`${totals.calories} kcal · ${Math.abs(rem)} de exceso`:`${totals.calories} / ${adjustedCal} kcal · quedan ${rem}`}</div></div></FadeIn></>}
       </div>}
 
       {tab==="monthly"&&<MonthlyTracker profile={profile}/>}
